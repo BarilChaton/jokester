@@ -23,7 +23,7 @@ const Home = (props) => {
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
-      <HeroBar {...props}/>
+      <HeroBar className='w-screen' {...props}/>
     </div>
   )
 }

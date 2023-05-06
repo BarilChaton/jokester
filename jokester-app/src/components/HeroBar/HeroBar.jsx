@@ -42,9 +42,12 @@ const HeroBar = (props) => {
           darkMode
         }}/>
       </div>
-      <div className={dmToggleStyle}>
+      <div className='flex w-[90vw]'>
+        {/* links here */}
+      </div>
+      <div className='flex mx-2 justify-self-end items-center'> 
         {/* Dark Mode Button Container */}
-        <div className='flex mx-2 items-center'> 
+        <div className={dmToggleStyle}>
           <button onClick={handleColorModeToggle}>
             { darkMode ? <MdOutlineDarkMode /> : <MdDarkMode /> }
           </button>
