@@ -27,6 +27,9 @@ module.exports = {
         800: '800px',
         '90vh': '90vh',
       },
+      rotate: {
+        'm45': '-45deg'
+      },
       flex: {
         0.7: '0.7 1 0%',
       },

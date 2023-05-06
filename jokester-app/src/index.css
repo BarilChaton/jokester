@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Comme:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
 body {
   font-family: 'Comme', sans-serif;
@@ -10,6 +11,11 @@ body {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Logo */
+.logoFont {
+  font-family: 'Luckiest Guy', cursive;
 }
 
 /* Dark Mode */

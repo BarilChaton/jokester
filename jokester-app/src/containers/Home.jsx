@@ -2,7 +2,7 @@ import React, { useState, useLayoutEffect } from 'react'
 import reducer from '../redux/reducer'
 import { connect } from 'react-redux'
 
-import HeroBar from '../components/HeroBar'
+import HeroBar from '../components/HeroBar/HeroBar'
 
 const Home = (props) => {
   const { darkMode } = props
