@@ -1,14 +1,19 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
+// Containers
+import Home from './containers/Home'
 
 const App = () => {
+
   return (
-    <div className="w-screen h-screen">
-      <div className='flex w-screen h-screen justify-center items-center'>
-        <h1 className="text-[5em] font-bold">HELLO WORLD!</h1>
-      </div>
-    </div>
-  );
+    <GoogleOAuthProvider>
+      <Routes>
+        <Route path='/*' element={<Home />} />
+      </Routes>
+    </GoogleOAuthProvider>
+  )
 }
 
 export default App;

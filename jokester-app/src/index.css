@@ -2,12 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comme:wght@300&display=swap');
 
 body {
-  font-family: 'Cantarell', sans-serif;
+  font-family: 'Comme', sans-serif;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Dark Mode */
+.darkModePrimaryBg {
+  background-color: #363131;
+}
+.darkModeSecondaryBg {
+  background-color: #1c1a1a;
+}
+.darkModePrimaryText {
+  color: #FAFAFA;
+}
+.darkModeSecondaryText {
+  color: #fff
+}
+
+/* Light Mode */
+.lightModePrimaryBg {
+  background-color: #FAFAFA;
+}
+.lightModeSecondaryBg {
+  background-color: #fce1e1;
+}
+.lightModePrimaryText {
+  color: #262424;
+}
+.lightModeSecondaryText {
+  color: #141414
+}
+
