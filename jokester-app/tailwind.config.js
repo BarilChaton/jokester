@@ -41,6 +41,9 @@ module.exports = {
         350: '350px',
         620: '620px',
       },
+      backgroundColor: {
+        blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
+      },
       keyframes: {
         'slide-in': {
           '0%': {

@@ -1,3 +1,4 @@
 module.exports = {
-  darkMode: true
+  darkMode: true,
+  loggedIn: false
 }

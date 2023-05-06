@@ -3,9 +3,10 @@ import reducer from '../redux/reducer'
 import { connect } from 'react-redux'
 
 import HeroBar from '../components/HeroBar/HeroBar'
+import Login from '../components/Login'
 
 const Home = (props) => {
-  const { darkMode } = props
+  const { darkMode, loginModalOpen } = props
 
   const [ bgColor, setBgColor ] = useState()
 
@@ -23,12 +24,14 @@ const Home = (props) => {
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
-      <HeroBar className='w-screen' {...props}/>
+      <HeroBar {...props}/>
+      {loginModalOpen && <Login {...props}/> }
     </div>
   )
 }
 
 export const Reducer = reducer
 export default connect(state => ({
-  darkMode: state.darkMode
+  darkMode: state.darkMode,
+  loginModalOpen: state.loginModalOpen
 }))(Home)
