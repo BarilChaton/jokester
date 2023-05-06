@@ -31,15 +31,15 @@ const HeroBar = (props) => {
   }
 
   return (
-    <div className={`flex gap-2 md:gap-5 w-full h-[60px] p-2 ${bgColor}`}>
-      <div className='flex mx-2'>
+    <div className={`flex gap-2 md:gap-5 w-full h-[60px] items-center p-2 ${bgColor}`}>
+      <div className='justify-self-start mx-2'>
         <Logo {...{
           darkMode
         }}/>
       </div>
       <div className={dmToggleStyle}>
         {/* Dark Mode Button Container */}
-        <div className='flex mx-2 justify-center items-center'> 
+        <div className='flex mx-2 items-center'> 
           <button onClick={handleColorModeToggle}>
             { darkMode ? <MdOutlineDarkMode /> : <MdDarkMode /> }
           </button>
