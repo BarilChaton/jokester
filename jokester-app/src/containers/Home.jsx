@@ -15,6 +15,10 @@ const Home = (props) => {
     } else {
       setBgColor('lightModePrimaryBg')
     }
+
+    return () => {
+      setBgColor()
+    }
   }, [ darkMode ])
 
   return (

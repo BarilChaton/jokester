@@ -17,6 +17,10 @@ const Logo = (props) => {
     } else {
       setStyle(lm)
     }
+
+    return () => {
+      setStyle()
+    }
   }, [darkMode, dm, lm])
 
   return (

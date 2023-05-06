@@ -20,6 +20,11 @@ const HeroBar = (props) => {
       setBgColor('lightModeSecondaryBg')
       setDmToggleStyle(lm)
     }
+
+    return () => {
+      setBgColor()
+      setDmToggleStyle()
+    }
   }, [darkMode, dm, lm])
 
   function handleColorModeToggle() {
