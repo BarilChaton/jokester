@@ -1,29 +1,31 @@
 import { setDarkMode } from '../../redux/actions'
-
 import { connect } from 'react-redux'
-import { useState } from 'react'
-
-// Icons
+import { useState, useLayoutEffect } from 'react'
 import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md'
-
-// Components
 import Logo from './Logo'
+import { dmButtonHover } from '../../config/styleConfig'
 
 const HeroBar = (props) => {
   const { darkMode } = props
+  const { dm, lm } = dmButtonHover
 
-  const [ bgColor, setBgColor ] = useState('darkModeSecondaryBg')
-  const [ textColor, setTextColor ] = useState('darkModeSecondaryText')
+  const [ bgColor, setBgColor ] = useState()
+  const [ dmToggleStyle, setDmToggleStyle ] = useState(darkMode ? dm : lm)
 
-  // Set up redux to handle this
+  useLayoutEffect(() => {
+    if (darkMode) {
+      setBgColor('darkModeSecondaryBg')
+      setDmToggleStyle(dm)
+    } else {
+      setBgColor('lightModeSecondaryBg')
+      setDmToggleStyle(lm)
+    }
+  }, [darkMode, dm, lm])
+
   function handleColorModeToggle() {
     if (darkMode) {
-      setBgColor('lightModeSecondaryBg')
-      setTextColor('lightModeSecondaryText')
       props.setDarkMode(false)
     } else {
-      setBgColor('darkModeSecondaryBg')
-      setTextColor('darkModeSecondaryText')
       props.setDarkMode(true)
     }
   }
@@ -35,7 +37,7 @@ const HeroBar = (props) => {
           darkMode
         }}/>
       </div>
-      <div className={`flex flex-col justify-center items-center text-[25px] ${textColor}`}>
+      <div className={dmToggleStyle}>
         {/* Dark Mode Button Container */}
         <div className='flex mx-2 justify-center items-center'> 
           <button onClick={handleColorModeToggle}>

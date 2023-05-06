@@ -6,12 +6,10 @@ import HeroBar from '../components/HeroBar/HeroBar'
 
 const Home = (props) => {
   const { darkMode } = props
-  console.log(darkMode);
 
-  const [ bgColor, setBgColor ] = useState('darkModePrimaryBg')
+  const [ bgColor, setBgColor ] = useState()
 
   useLayoutEffect(() => {
-    console.log(darkMode);
     if (darkMode) {
       setBgColor('darkModePrimaryBg')
     } else {

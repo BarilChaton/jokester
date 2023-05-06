@@ -16,6 +16,7 @@ body {
 /* Logo */
 .logoFont {
   font-family: 'Luckiest Guy', cursive;
+  font-weight: bold;
 }
 
 /* Dark Mode */

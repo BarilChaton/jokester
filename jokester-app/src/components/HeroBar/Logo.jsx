@@ -1,26 +1,33 @@
 import React, { useState, useLayoutEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { FaLaughSquint } from 'react-icons/fa'
+import { logoHover } from '../../config/styleConfig'
 
 const Logo = (props) => {
+  const { darkMode } = props
+  const { dm, lm } = logoHover
+  
+  const [ style, setStyle ] = useState()
 
-  const [ color, setColor ] = useState('darkModePrimaryText')
 
   useLayoutEffect(() => {
-    if (props.darkMode) {
-      setColor('darkModePrimaryText')
+    if (darkMode) {
+      setStyle(dm)
     } else {
-      setColor('lightModePrimaryText')
+      setStyle(lm)
     }
-  }, [ props.darkMode ])
+  }, [darkMode, dm, lm])
 
   return (
-    <div className={`flex flex-col-2 items-center justify-center text-4xl ${color} font-bold logoFont`}>
-      <h1>jokester</h1>
-      <div className='rotate-m45'>
-        <FaLaughSquint />
+    <NavLink to={'/'}>
+      <div className={style}>
+        <h1>jokester</h1>
+        <div className='rotate-m45'>
+          <FaLaughSquint />
+        </div>
       </div>
-    </div>
+    </NavLink>
   )
 }
 
