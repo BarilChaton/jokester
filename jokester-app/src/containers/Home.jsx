@@ -1,4 +1,4 @@
-import { setUser, setLoggedIn } from '../redux/actions'
+import { setUser, setLoggedIn, setSessionId } from '../redux/actions'
 import React, { useState, useLayoutEffect, useEffect } from 'react'
 import reducer from '../redux/reducer'
 import { connect } from 'react-redux'
@@ -28,6 +28,7 @@ const Home = (props) => {
     
     if(User) {
       const { name, picture, sub } = User
+
   
       const newUser = {
         _id: sub,
@@ -37,9 +38,14 @@ const Home = (props) => {
       }
   
       props.setUser(newUser)
+      props.setSessionId('Usr_' + newUser._id)
       props.setLoggedIn(true)
     } else {
+      const newGuestId = Math.floor(Math.random() * 90000000000000000000) + 10000000000000000000;
+      const guestId = newGuestId.toString();
+
       props.setLoggedIn(false)
+      props.setSessionId('Gue_' + guestId)
     }
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,4 +64,4 @@ export default connect(state => ({
   darkMode: state.darkMode,
   loginModalOpen: state.loginModalOpen,
   user: state.user
-}), { setUser, setLoggedIn })(Home)
+}), { setUser, setLoggedIn, setSessionId })(Home)

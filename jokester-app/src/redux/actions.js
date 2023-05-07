@@ -1,4 +1,4 @@
-import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER } from './constants'
+import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER, SET_SESSION_ID } from './constants'
 
 export function setDarkMode(darkMode) {
   return {
@@ -22,5 +22,11 @@ export function setUser(user) {
   return {
     type: SET_USER,
     user
+  }
+}
+export function setSessionId(sessionId) {
+  return {
+    type: SET_SESSION_ID,
+    sessionId
   }
 }

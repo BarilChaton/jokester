@@ -1,4 +1,4 @@
-import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER } from './constants'
+import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER, SET_SESSION_ID } from './constants'
 
 import createReducer from './createReducer'
 import initialState from './initialState'
@@ -27,6 +27,12 @@ export default function appReducer(state = initialState, action) {
       const { user } = action
       return createReducer(state, {
         user
+      })
+    }
+    case SET_SESSION_ID: {
+      const { sessionId } = action
+      return createReducer(state, {
+        sessionId
       })
     }
 

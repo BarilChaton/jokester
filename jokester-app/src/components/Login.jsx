@@ -1,4 +1,4 @@
-import { setLoggedIn, setLoginModal, setUser } from '../redux/actions'
+import { setLoggedIn, setLoginModal, setUser, setSessionId } from '../redux/actions'
 import React, { useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
@@ -32,6 +32,7 @@ const Login = (props) => {
     const decoded = jwt_decode(response.credential)
     localStorage.setItem('user', JSON.stringify(decoded))
     const { name, picture, sub } = decoded
+    
 
     const user = {
       _id: sub,
@@ -43,12 +44,10 @@ const Login = (props) => {
     client.createIfNotExists(user)
       .then(() => {
         props.setUser(user)
+        props.setSessionId('Usr_' + sub)
         props.setLoggedIn(true)
         props.setLoginModal(false)
       })
-
-
-    // add create if not exist and add to redux state after
   }
 
   return (
@@ -79,4 +78,4 @@ const Login = (props) => {
 
 export default connect(state => ({
   darkMode: state.darkMode
-}), { setLoggedIn, setLoginModal, setUser })(Login)
+}), { setLoggedIn, setLoginModal, setUser, setSessionId })(Login)
