@@ -9,7 +9,7 @@ import Logo from './HeroBar/Logo'
 import { client } from '../client'
 
 const Login = (props) => {
-  const { darkMode } = props
+  const { darkMode, dispatch } = props
 
   const [ bgColor, setBgColor ] = useState(darkMode ? 'darkModeSecondaryBg' : 'lightModeSecondaryBg')
   const [ xColor, setXColor ] = useState(darkMode ? 'darkModeSecondaryText' : 'lightModeSecondaryText')
@@ -25,7 +25,7 @@ const Login = (props) => {
   }, [darkMode])
 
   function handleCloseModal() {
-    props.setLoginModal(false)
+    dispatch(setLoginModal(false))
   }
 
   const googleResponse = async (response) => {
@@ -43,10 +43,10 @@ const Login = (props) => {
 
     client.createIfNotExists(user)
       .then(() => {
-        props.setUser(user)
-        props.setSessionId('Usr_' + sub)
-        props.setLoggedIn(true)
-        props.setLoginModal(false)
+        dispatch(setUser(user))
+        dispatch(setSessionId('Usr_' + sub))
+        dispatch(setLoggedIn(true))
+        dispatch(setLoginModal(false))
       })
   }
 

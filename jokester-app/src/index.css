@@ -21,29 +21,29 @@ body {
 
 /* Dark Mode */
 .darkModePrimaryBg {
-  background-color: #363131;
+  background-color: #2E4F4F;
 }
 .darkModeSecondaryBg {
-  background-color: #1c1a1a;
+  background-color: #2C3333;
 }
 .darkModePrimaryText {
-  color: #FAFAFA;
+  color: #CBE4DE;
 }
 .darkModeSecondaryText {
-  color: #fff
+  color: #0E8388
 }
 
 /* Light Mode */
 .lightModePrimaryBg {
-  background-color: #FAFAFA;
+  background-color: #EEEEEE;
 }
 .lightModeSecondaryBg {
-  background-color: #fce1e1;
+  background-color: #32E0C4;
 }
 .lightModePrimaryText {
-  color: #262424;
+  color: #212121;
 }
 .lightModeSecondaryText {
-  color: #141414
+  color: #0D7377
 }
 

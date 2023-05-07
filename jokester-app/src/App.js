@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
@@ -7,8 +8,11 @@ import Home, { Reducer } from './containers/Home'
 
 const App = () => {
 
+  const dispatch = useDispatch()
+
   const props = {
-    Reducer
+    Reducer,
+    dispatch
   }
 
   return (

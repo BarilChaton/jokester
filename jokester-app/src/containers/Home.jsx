@@ -7,7 +7,7 @@ import HeroBar from '../components/HeroBar/HeroBar'
 import Login from '../components/Login'
 
 const Home = (props) => {
-  const { darkMode, loginModalOpen } = props
+  const { darkMode, loginModalOpen, dispatch } = props
 
   const [ bgColor, setBgColor ] = useState()
 
@@ -37,24 +37,24 @@ const Home = (props) => {
         image: picture
       }
   
-      props.setUser(newUser)
-      props.setSessionId('Usr_' + newUser._id)
-      props.setLoggedIn(true)
+      dispatch(setUser(newUser))
+      dispatch(setSessionId('Usr_' + newUser._id))
+      dispatch(setLoggedIn(true))
     } else {
       const newGuestId = Math.floor(Math.random() * 90000000000000000000) + 10000000000000000000;
       const guestId = newGuestId.toString();
 
-      props.setLoggedIn(false)
-      props.setSessionId('Gue_' + guestId)
+      dispatch(setLoggedIn(false))
+      dispatch(setSessionId('Gue_' + guestId))
     }
   
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch])
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
       <div className='flex w-screen h-[65px] flex-initial'>
         <HeroBar {...props}/>
+        {loginModalOpen && <Login {...props}/> }
       </div>
     </div>
   )

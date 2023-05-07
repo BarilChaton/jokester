@@ -8,7 +8,7 @@ import { dmButtonHover } from '../../config/styleConfig'
 import LoginButton from './LoginButton'
 
 const HeroBar = (props) => {
-  const { darkMode, loggedIn } = props
+  const { darkMode, dispatch } = props
   const { dm, lm } = dmButtonHover
 
   const [ bgColor, setBgColor ] = useState()
@@ -31,14 +31,14 @@ const HeroBar = (props) => {
 
   function handleColorModeToggle() {
     if (darkMode) {
-      props.setDarkMode(false)
+      dispatch(setDarkMode(false))
     } else {
-      props.setDarkMode(true)
+      dispatch(setDarkMode(true))
     }
   }
 
   return (
-    <div className={`flex relative w-full h-full items-center p-2 ${bgColor}`}>
+    <div className={`flex relative w-full h-full shadow-lg items-center p-2 ${bgColor}`}>
       <div className='flex absolute left-0 ml-[75px] items-center'>
         <NavLink to={'/'}>
           <Logo {...{
@@ -49,9 +49,7 @@ const HeroBar = (props) => {
       <div className='flex absolute right-0 flex-col-2 justify-end items-center'>
         <div className='items-center'>
           {/* login or options dropdown button */}
-          <LoginButton {...{
-            loggedIn
-          }}/>
+          <LoginButton {...props}/>
         </div>
         <div className='justify-center mr-[75px] items-center'> 
           {/* Dark Mode Button Container */}

@@ -15,8 +15,8 @@ module.exports = {
         656: '656px',
         880: '880px',
         508: '508px',
-        'SignUpNormal': '40px',
-        'SignUpExtend': '140px'
+        'SignUpNormal': '55px',
+        'SignUpExtend': '200px'
       },
       height: {
         80: '80px',
