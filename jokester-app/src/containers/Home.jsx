@@ -4,7 +4,7 @@ import reducer from '../redux/reducer'
 import { connect } from 'react-redux'
 
 import HeroBar from '../components/HeroBar/HeroBar'
-import Login from '../components/Login'
+import Login from '../components/Login/Login'
 
 const Home = (props) => {
   const { darkMode, loginModalOpen, dispatch } = props
@@ -25,20 +25,32 @@ const Home = (props) => {
 
   useEffect(() => {
     const User = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear()
+    console.log(User);
     
     if(User) {
-      const { name, picture, sub } = User
+      const { name, picture, id } = User
+      
+      let newImage
 
-  
+      // Fix so that image loads on refresh if logged in with FB
+      if (picture && picture.children && picture.children.length > 0) {
+        const { data } = picture
+        const { url } = data
+
+        newImage = url
+      } else {
+        newImage = picture
+      }
+
       const newUser = {
-        _id: sub,
+        _id: id,
         _type: 'user',
         userName: name,
-        image: picture
+        image: newImage
       }
   
       dispatch(setUser(newUser))
-      dispatch(setSessionId('Usr_' + newUser._id))
+      dispatch(setSessionId(newUser._id))
       dispatch(setLoggedIn(true))
     } else {
       const newGuestId = Math.floor(Math.random() * 90000000000000000000) + 10000000000000000000;

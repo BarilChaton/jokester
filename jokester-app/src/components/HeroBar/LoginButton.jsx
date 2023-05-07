@@ -6,7 +6,6 @@ import { FaRegUser } from 'react-icons/fa'
 
 const LoginButton = (props) => {
   const { darkMode, loggedIn, user, dispatch } = props
-  console.log(props);
 
 
   const [ extend, setExtend ] = useState(false)

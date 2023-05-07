@@ -1,12 +1,13 @@
-import { setLoggedIn, setLoginModal, setUser, setSessionId } from '../redux/actions'
+import { setLoggedIn, setLoginModal, setUser, setSessionId } from '../../redux/actions'
 import React, { useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-import Logo from './HeroBar/Logo'
-import { client } from '../client'
+import Logo from '../HeroBar/Logo'
+import FacebookLoginBtn from './facebookLoginBtn'
+import { client } from '../../client'
 
 const Login = (props) => {
   const { darkMode, dispatch } = props
@@ -31,20 +32,20 @@ const Login = (props) => {
   const googleResponse = async (response) => {
     const decoded = jwt_decode(response.credential)
     localStorage.setItem('user', JSON.stringify(decoded))
-    const { name, picture, sub } = decoded
-    
+    const { name, picture, sub: id } = decoded
+    console.log(decoded); 
 
-    const user = {
-      _id: sub,
+    const googleUser = {
+      _id: id,
       _type: 'user',
       userName: name,
       image: picture
     }
 
-    client.createIfNotExists(user)
+    client.createIfNotExists(googleUser)
       .then(() => {
-        dispatch(setUser(user))
-        dispatch(setSessionId('Usr_' + sub))
+        dispatch(setUser(googleUser))
+        dispatch(setSessionId(googleUser._id))
         dispatch(setLoggedIn(true))
         dispatch(setLoginModal(false))
       })
@@ -64,6 +65,7 @@ const Login = (props) => {
             </button>
           </div>
         </div>
+        <div className='flex flex-col gap-8 justify-center items-center'>
           <div className='flex justify-center mt-[8em] scale-150'>
             <GoogleLogin 
               clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
@@ -71,6 +73,10 @@ const Login = (props) => {
               onError={() => console.log('error')}
             />
           </div>
+          <div>
+            <FacebookLoginBtn {...props} />
+          </div>
+        </div>
       </div>
     </div>
   )
