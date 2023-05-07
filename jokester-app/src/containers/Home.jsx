@@ -39,7 +39,7 @@ const Home = (props) => {
     }
 
     props.setUser(newUser)
-    
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
