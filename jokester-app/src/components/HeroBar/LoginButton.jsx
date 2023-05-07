@@ -2,16 +2,15 @@ import { setLoginModal } from '../../redux/actions'
 import React, { useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
+import { FaRegUser } from 'react-icons/fa'
+
 const LoginButton = (props) => {
-  const { loggedIn } = props
+  const { loggedIn, user } = props
 
-  const [ buttonText, setButtonText ] = useState(loggedIn ? 'UserName' : 'Sign Up')
+  const [ extend, setExtend ] = useState(false)
+  const [ buttonText, setButtonText ] = useState()
 
-  function handleLogin() {
-    if (!loggedIn) {
-      props.setLoginModal(true)
-    } 
-  }
+
 
   useLayoutEffect(() => {
     if (loggedIn) {
@@ -19,17 +18,28 @@ const LoginButton = (props) => {
     } else {
       setButtonText('Sign Up/Login')
     }
-  }, [loggedIn])
+  }, [ loggedIn ])
+
+  useLayoutEffect(() => {
+
+  }, [])
+
+  function handleClick() {
+    if (!loggedIn) {
+      props.setLoginModal(true)
+    } 
+  }
 
   return (
-    <div className='w-[13vw] h-auto my-[2px] px-2 text-white font-bold text-lg'>
-      <button onClick={handleLogin} className='bg-blue-500 rounded-md w-full px-5 py-2 justify-center items-center'>
-        <h2>{buttonText}</h2>
+    <div className='w-[15vw] flex justify-end h-auto my-[2px] px-2 text-white font-bold text-lg'>
+      <button onClick={handleClick} className='flex flex-row h-[40px] w-[40px] items-center justify-center bg-blue-400 text-white rounded-full p-0 m-3'>
+        {!loggedIn ? <FaRegUser /> : <img src={user.image} alt="user" className='w-[30px] h-[30px] rounded-full' />}
       </button>      
     </div>
   )
 }
 
 export default connect(state => ({
-  loggedIn: state.loggedIn
+  loggedIn: state.loggedIn,
+  user: state.user
 }), { setLoginModal })(LoginButton)

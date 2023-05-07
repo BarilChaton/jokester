@@ -38,29 +38,28 @@ const HeroBar = (props) => {
   }
 
   return (
-    <div className={`flex gap-2 md:gap-5 w-full h-[60px] items-center p-2 ${bgColor}`}>
-      <div className='justify-self-start mx-2'>
+    <div className={`flex relative w-full h-full items-center p-2 ${bgColor}`}>
+      <div className='flex absolute left-0 ml-[75px] items-center'>
         <NavLink to={'/'}>
           <Logo {...{
             darkMode
           }}/>
         </NavLink>
       </div>
-      <div className='flex w-[85vw]'>
-        {/* links here */}
-      </div>
-      <div className='flex w-[13vw] h-auto'>
-        {/* login or options dropdown button */}
-        <LoginButton {...{
-          loggedIn
-        }}/>
-      </div>
-      <div className='flex mx-2 justify-self-end items-center'> 
-        {/* Dark Mode Button Container */}
-        <div className={dmToggleStyle}>
-          <button onClick={handleColorModeToggle}>
-            { darkMode ? <MdOutlineDarkMode /> : <MdDarkMode /> }
-          </button>
+      <div className='flex absolute right-0 flex-col-2 justify-end items-center'>
+        <div className='items-center'>
+          {/* login or options dropdown button */}
+          <LoginButton {...{
+            loggedIn
+          }}/>
+        </div>
+        <div className='justify-center mr-[75px] items-center'> 
+          {/* Dark Mode Button Container */}
+          <div className={dmToggleStyle}>
+            <button onClick={handleColorModeToggle}>
+              { darkMode ? <MdOutlineDarkMode /> : <MdDarkMode /> }
+            </button>
+          </div>
         </div>
       </div>
     </div>

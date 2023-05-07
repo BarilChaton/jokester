@@ -53,8 +53,9 @@ const Home = (props) => {
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
-      <HeroBar {...props}/>
-      {loginModalOpen && <Login {...props}/> }
+      <div className='flex w-screen h-[65px] flex-initial'>
+        <HeroBar {...props}/>
+      </div>
     </div>
   )
 }
