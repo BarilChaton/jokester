@@ -15,6 +15,8 @@ module.exports = {
         656: '656px',
         880: '880px',
         508: '508px',
+        'SignUpNormal': '55px',
+        'SignUpExtend': '200px'
       },
       height: {
         80: '80px',
@@ -26,6 +28,12 @@ module.exports = {
         685: '685px',
         800: '800px',
         '90vh': '90vh',
+      },
+      transitionDuration: {
+        'SignUpTransTime': '300ms'
+      },
+      transitionTimingFunction: {
+        'SignUpEasing': 'ease-out'
       },
       rotate: {
         'm45': '-45deg'
