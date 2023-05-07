@@ -1,4 +1,4 @@
 module.exports = {
   darkMode: true,
-  loggedIn: false
+  loggedIn: false,
 }

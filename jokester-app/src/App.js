@@ -1,4 +1,4 @@
-import { React } from 'react'
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
@@ -12,7 +12,7 @@ const App = () => {
   }
 
   return (
-    <GoogleOAuthProvider>
+    <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}>
       <Routes>
         <Route path='/*' element={<Home {...props} />} />
       </Routes>

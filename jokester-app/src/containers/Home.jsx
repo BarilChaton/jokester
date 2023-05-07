@@ -1,4 +1,5 @@
-import React, { useState, useLayoutEffect } from 'react'
+import { setUser, setLoggedIn } from '../redux/actions'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import reducer from '../redux/reducer'
 import { connect } from 'react-redux'
 
@@ -22,6 +23,26 @@ const Home = (props) => {
     }
   }, [ darkMode ])
 
+  useEffect(() => {
+    const User = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear()
+    if (User.email_verified) {
+      props.setLoggedIn(true)
+    }
+    console.log(User);
+    const { name, picture, sub } = User
+
+    const newUser = {
+      id: sub,
+      type: 'user',
+      userName: name,
+      image: picture
+    }
+
+    props.setUser(newUser)
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
       <HeroBar {...props}/>
@@ -33,5 +54,6 @@ const Home = (props) => {
 export const Reducer = reducer
 export default connect(state => ({
   darkMode: state.darkMode,
-  loginModalOpen: state.loginModalOpen
-}))(Home)
+  loginModalOpen: state.loginModalOpen,
+  user: state.user
+}), { setUser, setLoggedIn })(Home)

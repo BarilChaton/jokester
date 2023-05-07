@@ -1,4 +1,4 @@
-import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN } from './constants'
+import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER } from './constants'
 
 import createReducer from './createReducer'
 import initialState from './initialState'
@@ -21,6 +21,12 @@ export default function appReducer(state = initialState, action) {
       const { loginModalOpen } = action
       return createReducer(state, {
         loginModalOpen
+      })
+    }
+    case SET_USER: {
+      const { user } = action
+      return createReducer(state, {
+        user
       })
     }
 

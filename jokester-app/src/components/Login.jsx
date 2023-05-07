@@ -1,8 +1,9 @@
-import { setLoggedIn } from '../redux/actions'
+import { setLoggedIn, setLoginModal, setUser } from '../redux/actions'
 import React, { useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 
 import Logo from './HeroBar/Logo'
 
@@ -10,21 +11,60 @@ const Login = (props) => {
   const { darkMode } = props
 
   const [ bgColor, setBgColor ] = useState(darkMode ? 'darkModeSecondaryBg' : 'lightModeSecondaryBg')
+  const [ xColor, setXColor ] = useState(darkMode ? 'darkModeSecondaryText' : 'lightModeSecondaryText')
 
   useLayoutEffect(() => {
     if (darkMode) {
       setBgColor('darkModePrimaryBg')
+      setXColor('darkModeSecondaryText')
     } else {
       setBgColor('lightModePrimaryBg')
+      setXColor('lightModeSecondaryText')
     }
   }, [darkMode])
 
+  function handleCloseModal() {
+    props.setLoginModal(false)
+  }
+
+  const googleResponse = async (response) => {
+    const decoded = jwt_decode(response.credential)
+    localStorage.setItem('user', JSON.stringify(decoded))
+    const { name, picture, sub } = decoded
+
+    const user = {
+      id: sub,
+      type: 'user',
+      userName: name,
+      image: picture
+    }
+
+    props.setUser(user)
+
+    // add create if not exist and add to redux state after
+  }
+
   return (
     <div className='absolute flex flex-col justify-center items-center top-0 bottom-0 left-0 right-0 bg-blackOverlay'>
-      <div className={`w-[400px] h-[500px] ${bgColor} rounded-lg`}>
-        <div className='justify-center items-center'>
-          <Logo className='flex justify-center mt-4'/>
+      <div className={`w-[400px] h-[500px] p-5 ${bgColor} rounded-lg`}>
+        <div className='flex justify-center items-center'>
+          <div className='flex gap-14 ml-[85px] mt-[-10px] justify-center'>
+            <Logo />
+            <button 
+              onClick={handleCloseModal}
+              className={`justify-center items-center w-10 h-auto p-2 ${xColor} text-3xl rounded-full`}
+            >
+              <AiOutlineCloseCircle />
+            </button>
+          </div>
         </div>
+          <div className='flex justify-center mt-[8em] scale-150'>
+            <GoogleLogin 
+              clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
+              onSuccess={(response) => googleResponse(response)}
+              onError={() => console.log('error')}
+            />
+          </div>
       </div>
     </div>
   )
@@ -32,4 +72,4 @@ const Login = (props) => {
 
 export default connect(state => ({
   darkMode: state.darkMode
-}), { setLoggedIn })(Login)
+}), { setLoggedIn, setLoginModal, setUser })(Login)
