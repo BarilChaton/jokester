@@ -25,20 +25,22 @@ const Home = (props) => {
 
   useEffect(() => {
     const User = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear()
-    if (User.email_verified) {
+    
+    if(User) {
+      const { name, picture, sub } = User
+  
+      const newUser = {
+        _id: sub,
+        _type: 'user',
+        userName: name,
+        image: picture
+      }
+  
+      props.setUser(newUser)
       props.setLoggedIn(true)
+    } else {
+      props.setLoggedIn(false)
     }
-    console.log(User);
-    const { name, picture, sub } = User
-
-    const newUser = {
-      id: sub,
-      type: 'user',
-      userName: name,
-      image: picture
-    }
-
-    props.setUser(newUser)
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

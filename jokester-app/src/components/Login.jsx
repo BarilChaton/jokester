@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
 import Logo from './HeroBar/Logo'
+import { client } from '../client'
 
 const Login = (props) => {
   const { darkMode } = props
@@ -33,13 +34,19 @@ const Login = (props) => {
     const { name, picture, sub } = decoded
 
     const user = {
-      id: sub,
-      type: 'user',
+      _id: sub,
+      _type: 'user',
       userName: name,
       image: picture
     }
 
-    props.setUser(user)
+    client.createIfNotExists(user)
+      .then(() => {
+        props.setUser(user)
+        props.setLoggedIn(true)
+        props.setLoginModal(false)
+      })
+
 
     // add create if not exist and add to redux state after
   }
