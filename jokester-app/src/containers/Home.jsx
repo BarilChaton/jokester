@@ -5,7 +5,7 @@ import { client } from '../client'
 import { userQuery } from '../utils/data'
 import { connect } from 'react-redux'
 
-import HeroBar from '../components/NavBar/topBar'
+import TopBar from '../components/NavBar/topBar'
 import Login from '../components/Login/Login'
 import UserMenu from '../components/UserMenu/userMenu'
 
@@ -29,7 +29,7 @@ const Home = (props) => {
 
   useLayoutEffect(() => {
     if (userDropDownMenu) {
-      setDropMenu('top-[0px]')
+      setDropMenu('top-[65px]')
     } else {
       setDropMenu('top-[-500px]')
     }
@@ -62,12 +62,12 @@ const Home = (props) => {
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
-      <div className='flex w-screen h-[65px] flex-initial z-10'>
-        <HeroBar {...props}/>
-        {loginModalOpen && <Login {...props}/> }
-      </div>
-      <div className={`flex relative justify-end smooth-transition right-[110px] ${dropMenu} z-[5]`}>
+      <div className={`flex absolute justify-end smooth-transition right-[110px] ${dropMenu} z-9`}>
         <UserMenu {...props}/>
+      </div>
+      <div className='flex w-screen h-[65px] flex-initial z-10'>
+        <TopBar {...props}/>
+        {loginModalOpen && <Login {...props}/> }
       </div>
     </div>
   )
