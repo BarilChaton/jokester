@@ -1,19 +1,49 @@
 import { setLoginModal } from '../../redux/actions'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { client } from '../../client'
+import { userQuery } from '../../utils/data' 
 
 import { FaRegUser } from 'react-icons/fa'
 
 const LoginButton = (props) => {
   const { darkMode, loggedIn, user, dispatch } = props
-
-
+  
+  
   const [ extend, setExtend ] = useState(false)
   const [ buttonText, setButtonText ] = useState()
   const [ color, setColor ] = useState()
   const [ textColor, setTextColor ] = useState()
+  const [ imageToLoad, setImageToLoad ] = useState()
+
+  useEffect(() => {
+    const userString = localStorage.getItem('user')
+
+    if (userString && userString !== 'undefined') {
+      if (userString.includes('google')) {
+        const { sub, picture } = JSON.parse(userString)
+
+        const query = userQuery(sub)
+        client.fetch(query).then((userData) => {
+          const user = { ...userData, _id: sub, imageUrl: picture }
+          setImageToLoad(user.imageUrl)
+        })
+      } else {
+        const { id } = JSON.parse(userString)
+
+        const query = userQuery(id)
+        console.log(query);
+        client.fetch(query).then((userData) => {
+          const user = { ...userData, _id: id }
+          const { image } = user[0]
+          setImageToLoad(image.asset.url)
+        })
+      }
+    }
+  }, [ loggedIn ])
 
   useLayoutEffect(() => {
+
     const handleHover = () => {
       if(!loggedIn) {
         extendButton().then(() => {
@@ -40,13 +70,13 @@ const LoginButton = (props) => {
     }
 
     const signUpButton = document.querySelector(".sign-up-button")
-        signUpButton.addEventListener("mouseenter", handleHover)
-        signUpButton.addEventListener("mouseleave", handleLeave)
+    signUpButton.addEventListener("mouseenter", handleHover)
+    signUpButton.addEventListener("mouseleave", handleLeave)
 
-        return () => {
-            signUpButton.removeEventListener("mouseenter", handleHover)
-            signUpButton.removeEventListener("mouseleave", handleLeave)
-        }
+    return () => {
+        signUpButton.removeEventListener("mouseenter", handleHover)
+        signUpButton.removeEventListener("mouseleave", handleLeave)
+    }
   }, [loggedIn, user])
 
   useLayoutEffect(() => {
@@ -105,7 +135,7 @@ const LoginButton = (props) => {
             {buttonText}
           </h3>
           {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> : 
-          <img src={user.image} alt="user" className='w-[40px] h-[40px] m-[7px] rounded-full' />}
+          <img src={imageToLoad} alt="user" className='w-[40px] h-[40px] m-[7px] rounded-full' />}
       </button>      
     </div>
   )

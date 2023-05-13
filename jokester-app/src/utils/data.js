@@ -42,3 +42,16 @@ export const categories = [
     name: 'Politics',
   },
 ]
+
+export const userQuery = (userId) => {
+  const query = `*[_type == 'user' && _id == '${userId}']{
+    userName,
+    image{
+      asset->{
+        url
+      }
+    },
+    credentialType
+  }`
+  return query
+}
