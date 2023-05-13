@@ -70,13 +70,18 @@ const LoginButton = (props) => {
 
     const signUpButton = document.querySelector(".sign-up-button")
     signUpButton.addEventListener("mouseenter", handleHover)
-    signUpButton.addEventListener("mouseleave", handleLeave)
+
+    if (!userDropDownMenu) {
+      signUpButton.addEventListener("mouseleave", handleLeave)
+    } else if (!loggedIn) {
+      signUpButton.addEventListener("mouseleave", handleLeave)
+    }
 
     return () => {
         signUpButton.removeEventListener("mouseenter", handleHover)
         signUpButton.removeEventListener("mouseleave", handleLeave)
     }
-  }, [loggedIn, user])
+  }, [ loggedIn, user, userDropDownMenu ])
 
   useLayoutEffect(() => {
     if (darkMode) {

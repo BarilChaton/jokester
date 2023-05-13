@@ -66,5 +66,6 @@ const TopBar = (props) => {
 
 export default connect(state => ({
   darkMode: state.darkMode,
-  loggedIn: state.loggedIn
+  loggedIn: state.loggedIn,
+  user: state.user
 }), { setDarkMode })(TopBar)
