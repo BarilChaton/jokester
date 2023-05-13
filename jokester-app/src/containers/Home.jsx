@@ -5,9 +5,9 @@ import { client } from '../client'
 import { userQuery } from '../utils/data'
 import { connect } from 'react-redux'
 
-import HeroBar from '../components/HeroBar/HeroBar'
+import HeroBar from '../components/NavBar/topBar'
 import Login from '../components/Login/Login'
-import UserMenu from '../components/UserMenu/UserMenu'
+import UserMenu from '../components/UserMenu/userMenu'
 
 const Home = (props) => {
   const { darkMode, loginModalOpen, userDropDownMenu, dispatch } = props
@@ -66,7 +66,7 @@ const Home = (props) => {
         <HeroBar {...props}/>
         {loginModalOpen && <Login {...props}/> }
       </div>
-      <div className={`flex relative justify-end smooth-transition right-[110px] ${dropMenu} z-[9]`}>
+      <div className={`flex relative justify-end smooth-transition right-[110px] ${dropMenu} z-[5]`}>
         <UserMenu {...props}/>
       </div>
     </div>

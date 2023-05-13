@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-import Logo from '../HeroBar/Logo'
+import Logo from '../NavBar/logo'
 import GoogleLoginBtn from './googleLoginBtn'
 import FacebookLoginBtn from './facebookLoginBtn'
 

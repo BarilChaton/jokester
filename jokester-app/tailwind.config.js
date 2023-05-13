@@ -52,22 +52,6 @@ module.exports = {
       backgroundColor: {
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
       },
-      animation: {
-        slidedown: 'slidedown 0.35s ease-in-out',
-        slideup: 'slideup 0.35s ease-in-out',
-      },
-      keyframes: {
-        slidedown: {
-          from: { transform: 'translateY(500px)' },
-          to: { transform: 'translateY(0px)' },
-        },
-
-        slideup: {
-          from: { transform: 'translateY(-500px)' },
-          to: { transform: 'translateY(0px)' },
-        },
-      },
-
       transitionProperty: {
         height: 'height',
       },

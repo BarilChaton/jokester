@@ -19,7 +19,7 @@ const UserMenu = (props) => {
   }, [ darkMode ])
 
   return (
-    <div className={`flex w-[350px] h-[500px] ${bgColor}`}>
+    <div className={`flex w-[350px] h-[500px] shadow-lg ${bgColor}`}>
       
     </div>
   )

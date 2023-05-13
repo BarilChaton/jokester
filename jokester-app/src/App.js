@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 // Containers
-import Home, { Reducer } from './containers/Home'
+import Home, { Reducer } from './containers/home'
 
 const App = () => {
 

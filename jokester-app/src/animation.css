@@ -1,0 +1,13 @@
+.smooth-transition {
+  transition: all 0.35s ease-in-out;
+}
+
+.rotate-arrow-up {
+  transform: rotate(180deg);
+  transition: transform 100ms ease-in-out;
+}
+
+.rotate-arrow-down {
+  transform: rotate(0deg);
+  transition: transform 100ms ease-in-out;
+}

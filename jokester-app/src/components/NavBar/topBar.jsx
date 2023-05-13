@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { useState, useLayoutEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md'
-import Logo from './Logo'
+import Logo from './logo'
 import { dmButtonHover } from '../../config/styleConfig'
-import LoginButton from './LoginButton'
+import LoginButton from './loginButton'
 
-const HeroBar = (props) => {
+const TopBar = (props) => {
   const { darkMode, dispatch } = props
   const { dm, lm } = dmButtonHover
 
@@ -67,4 +67,4 @@ const HeroBar = (props) => {
 export default connect(state => ({
   darkMode: state.darkMode,
   loggedIn: state.loggedIn
-}), { setDarkMode })(HeroBar)
+}), { setDarkMode })(TopBar)

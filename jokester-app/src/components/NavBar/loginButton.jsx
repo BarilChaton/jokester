@@ -5,7 +5,7 @@ import { client } from '../../client'
 import { userQuery } from '../../utils/data' 
 
 import { FaRegUser } from 'react-icons/fa'
-import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
+import { MdKeyboardArrowDown } from 'react-icons/md'
 
 const LoginButton = (props) => {
   const { darkMode, loggedIn, user, userDropDownMenu, dispatch } = props
@@ -135,12 +135,11 @@ const LoginButton = (props) => {
         ${extend ? "w-SignUpExtend" : "w-SignUpNormal"}
         `}>
           <div className='flex items-center'>
-            <h3 className={`flex justify-center items-center m-auto transition-opacity duration-SignUpTransTime ${extend ? "opacity-1" : "opacity-0"}`}>
+            <h3 className={`flex justify-center items-center m-auto transition-opacity duration-200 ${extend ? "opacity-1" : "opacity-0"}`}>
               {buttonText}
             </h3>
-            {loggedIn && <div className={`flex justify-center text-2xl items-center transition-opacity duration-SignUpTransTime ${extend ? "opacity-1" : "opacity-0"}`}>
-              {!userDropDownMenu && <MdKeyboardArrowDown/>}
-              {userDropDownMenu && <MdKeyboardArrowUp/>}
+            {loggedIn && <div className={`flex justify-center text-2xl items-center transition-opacity duration-200 ${extend ? "opacity-1" : "opacity-0"}`}>
+              <MdKeyboardArrowDown className={`${userDropDownMenu ? "rotate-arrow-up" : "rotate-arrow-down"}`}/>
             </div>}
           </div>
           {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> : 
@@ -156,3 +155,5 @@ export default connect(state => ({
   user: state.user,
   userDropDownMenu: state.userDropDownMenu
 }), { setLoginModal, setUserDropDownMenu })(LoginButton)
+
+// ${extend ? "opacity-1" : "opacity-0"}
