@@ -47,3 +47,7 @@ body {
   color: #0D7377
 }
 
+.smooth-transition {
+  transition: all 0.35s ease-in-out;
+}
+

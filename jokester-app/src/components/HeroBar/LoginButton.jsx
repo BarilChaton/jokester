@@ -1,14 +1,14 @@
-import { setLoginModal } from '../../redux/actions'
+import { setLoginModal, setUserDropDownMenu } from '../../redux/actions'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { client } from '../../client'
 import { userQuery } from '../../utils/data' 
 
 import { FaRegUser } from 'react-icons/fa'
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
 
 const LoginButton = (props) => {
-  const { darkMode, loggedIn, user, dispatch } = props
-  
+  const { darkMode, loggedIn, user, userDropDownMenu, dispatch } = props
   
   const [ extend, setExtend ] = useState(false)
   const [ buttonText, setButtonText ] = useState()
@@ -32,7 +32,6 @@ const LoginButton = (props) => {
         const { id } = JSON.parse(userString)
 
         const query = userQuery(id)
-        console.log(query);
         client.fetch(query).then((userData) => {
           const user = { ...userData, _id: id }
           const { image } = user[0]
@@ -110,7 +109,11 @@ const LoginButton = (props) => {
   function handleClick() {
     if (!loggedIn) {
       dispatch(setLoginModal(true))
-    } 
+    } else if (loggedIn && !userDropDownMenu) {
+      dispatch(setUserDropDownMenu(true))
+    } else if (loggedIn && userDropDownMenu) {
+      dispatch(setUserDropDownMenu(false))
+    }
   }
 
   return (
@@ -131,9 +134,15 @@ const LoginButton = (props) => {
         duration-SignUpTransTime 
         ${extend ? "w-SignUpExtend" : "w-SignUpNormal"}
         `}>
-          <h3 className={`flex justify-center items-center m-auto transition-opacity duration-SignUpTransTime ${extend ? "opacity-1" : "opacity-0"}`}>
-            {buttonText}
-          </h3>
+          <div className='flex items-center'>
+            <h3 className={`flex justify-center items-center m-auto transition-opacity duration-SignUpTransTime ${extend ? "opacity-1" : "opacity-0"}`}>
+              {buttonText}
+            </h3>
+            {loggedIn && <div className={`flex justify-center text-2xl items-center transition-opacity duration-SignUpTransTime ${extend ? "opacity-1" : "opacity-0"}`}>
+              {!userDropDownMenu && <MdKeyboardArrowDown/>}
+              {userDropDownMenu && <MdKeyboardArrowUp/>}
+            </div>}
+          </div>
           {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> : 
           <img src={imageToLoad} alt="user" className='w-[40px] h-[40px] m-[7px] rounded-full' />}
       </button>      
@@ -144,5 +153,6 @@ const LoginButton = (props) => {
 export default connect(state => ({
   darkMode: state.darkMode,
   loggedIn: state.loggedIn,
-  user: state.user
-}), { setLoginModal })(LoginButton)
+  user: state.user,
+  userDropDownMenu: state.userDropDownMenu
+}), { setLoginModal, setUserDropDownMenu })(LoginButton)

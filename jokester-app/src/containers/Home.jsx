@@ -7,11 +7,13 @@ import { connect } from 'react-redux'
 
 import HeroBar from '../components/HeroBar/HeroBar'
 import Login from '../components/Login/Login'
+import UserMenu from '../components/UserMenu/UserMenu'
 
 const Home = (props) => {
-  const { darkMode, loginModalOpen, dispatch } = props
+  const { darkMode, loginModalOpen, userDropDownMenu, dispatch } = props
   
   const [ bgColor, setBgColor ] = useState()
+  const [ dropMenu, setDropMenu ] = useState()
   
   useLayoutEffect(() => {
     if (darkMode) {
@@ -24,6 +26,14 @@ const Home = (props) => {
       setBgColor()
     }
   }, [ darkMode ])
+
+  useLayoutEffect(() => {
+    if (userDropDownMenu) {
+      setDropMenu('top-[0px]')
+    } else {
+      setDropMenu('top-[-500px]')
+    }
+  }, [ userDropDownMenu ])
   
   useEffect(() => {
 
@@ -52,9 +62,12 @@ const Home = (props) => {
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
-      <div className='flex w-screen h-[65px] flex-initial'>
+      <div className='flex w-screen h-[65px] flex-initial z-10'>
         <HeroBar {...props}/>
         {loginModalOpen && <Login {...props}/> }
+      </div>
+      <div className={`flex relative justify-end smooth-transition right-[110px] ${dropMenu} z-[9]`}>
+        <UserMenu {...props}/>
       </div>
     </div>
   )
@@ -63,5 +76,6 @@ const Home = (props) => {
 export const Reducer = reducer
 export default connect(state => ({
   darkMode: state.darkMode,
-  loginModalOpen: state.loginModalOpen
+  loginModalOpen: state.loginModalOpen,
+  userDropDownMenu: state.userDropDownMenu
 }), { setUser, setLoggedIn, setSessionId })(Home)

@@ -52,33 +52,22 @@ module.exports = {
       backgroundColor: {
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
       },
+      animation: {
+        slidedown: 'slidedown 0.35s ease-in-out',
+        slideup: 'slideup 0.35s ease-in-out',
+      },
       keyframes: {
-        'slide-in': {
-          '0%': {
-            '-webkit-transform': 'translateX(-200px)',
-            transform: 'translateX(-200px)',
-          },
-          '100%': {
-            '-webkit-transform': 'translateX(0px)',
-            transform: 'translateX(0px)',
-          },
+        slidedown: {
+          from: { transform: 'translateY(500px)' },
+          to: { transform: 'translateY(0px)' },
         },
 
-        'slide-fwd': {
-          '0%': {
-            '-webkit-transform': 'translateZ(0px)',
-            transform: 'translateZ(0px)',
-          },
-          '100%': {
-            '-webkit-transform': 'translateZ(160px)',
-            transform: 'translateZ(160px)',
-          },
+        slideup: {
+          from: { transform: 'translateY(-500px)' },
+          to: { transform: 'translateY(0px)' },
         },
       },
-      animation: {
-        'slide-in': 'slide-in 0.5s ease-out',
-        'slide-fwd': ' slide-fwd 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
-      },
+
       transitionProperty: {
         height: 'height',
       },

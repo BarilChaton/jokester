@@ -46,12 +46,12 @@ const HeroBar = (props) => {
           }}/>
         </NavLink>
       </div>
-      <div className='flex absolute right-0 flex-col-2 justify-end items-center'>
+      <div className='flex absolute right-0 flex-col-2 justify-end items-center z-[11]'>
         <div className='items-center'>
           {/* login or options dropdown button */}
           <LoginButton {...props}/>
         </div>
-        <div className='justify-center mr-[75px] items-center'> 
+        <div className='justify-center mr-[75px] items-center z-[12]'> 
           {/* Dark Mode Button Container */}
           <div className={dmToggleStyle}>
             <button onClick={handleColorModeToggle}>
