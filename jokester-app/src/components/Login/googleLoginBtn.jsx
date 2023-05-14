@@ -52,7 +52,7 @@ const GoogleLoginBtn = (props) => {
       client.fetch(query).then((userData) => {
         const UserData = { ...userData, _id: sub }
 
-        dispatch(setUser(UserData[0]))
+        dispatch(setUser(UserData))
         dispatch(setSessionId(UserData._id))
         dispatch(setLoggedIn(true))
         dispatch(setDarkMode(UserData[0].settings.darkmode))

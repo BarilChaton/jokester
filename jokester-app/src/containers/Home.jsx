@@ -8,9 +8,10 @@ import { connect } from 'react-redux'
 import TopBar from '../components/NavBar/topBar'
 import Login from '../components/Login/Login'
 import UserMenu from '../components/UserMenu/userMenu'
+import Profile from '../components/Profile/profile'
 
 const Home = (props) => {
-  const { darkMode, loginModalOpen, userDropDownMenu, dispatch } = props
+  const { darkMode, loginModalOpen, userDropDownMenu, profileWindow, dispatch } = props
 
   const [ bgColor, setBgColor ] = useState()
   const [ dropMenu, setDropMenu ] = useState()
@@ -71,6 +72,10 @@ const Home = (props) => {
         <TopBar {...props}/>
         {loginModalOpen && <Login {...props}/> }
       </div>
+      {/* Content area */}
+      <div className='flex grow justify-center items-center m-10'>
+        {profileWindow && <Profile {...props}/>}
+      </div>
     </div>
   )
 }
@@ -80,5 +85,6 @@ export default connect(state => ({
   darkMode: state.darkMode,
   loggedIn: state.loggedIn,
   loginModalOpen: state.loginModalOpen,
-  userDropDownMenu: state.userDropDownMenu
+  userDropDownMenu: state.userDropDownMenu,
+  profileWindow: state.profileWindow
 }), { setUser, setLoggedIn, setSessionId, setDarkMode })(Home)

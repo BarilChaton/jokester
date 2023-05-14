@@ -1,4 +1,5 @@
-import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER, SET_SESSION_ID, SET_DROP_DOWN_MENU } from './constants'
+import { SET_DARK_MODE, SET_LOGGED_IN, SET_LOGIN_MODAL_OPEN, SET_USER, SET_SESSION_ID, SET_DROP_DOWN_MENU,
+  SET_PROFILE_WINDOW } from './constants'
 
 import createReducer from './createReducer'
 import initialState from './initialState'
@@ -39,6 +40,12 @@ export default function appReducer(state = initialState, action) {
       const { userDropDownMenu } = action
       return createReducer(state, {
         userDropDownMenu
+      })
+    }
+    case SET_PROFILE_WINDOW: {
+      const { profileWindow } = action
+      return createReducer(state, {
+        profileWindow
       })
     }
 

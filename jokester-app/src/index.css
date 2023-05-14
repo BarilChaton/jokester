@@ -26,24 +26,51 @@ body {
 .darkModeSecondaryBg {
   background-color: #2C3333;
 }
+.darkModeTertiaryBg {
+  background-color: #747474;
+}
 .darkModePrimaryText {
   color: #CBE4DE;
 }
 .darkModeSecondaryText {
   color: #0E8388
 }
+.darkModeTertiaryText {
+  color: #ffffff
+}
 
 /* Light Mode */
 .lightModePrimaryBg {
-  background-color: #EEEEEE;
+  background-color: #a6deff;
 }
 .lightModeSecondaryBg {
-  background-color: #32E0C4;
+  background-color: #329ae0;
+}
+.lightModeTertiaryBg {
+  background-color: #ffffff;
 }
 .lightModePrimaryText {
   color: #212121;
 }
 .lightModeSecondaryText {
   color: #0D7377
+}
+.lightModeTertiaryText {
+  color: #000000
+}
+
+/* Animations */
+.smooth-transition {
+  transition: all 0.35s ease-in-out;
+}
+
+.rotate-arrow-up {
+  transform: rotate(180deg);
+  transition: transform 100ms ease-in-out;
+}
+
+.rotate-arrow-down {
+  transform: rotate(0deg);
+  transition: transform 100ms ease-in-out;
 }
 

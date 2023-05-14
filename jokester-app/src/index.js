@@ -5,7 +5,6 @@ import store from './redux/store'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import './index.css'
-import './animation.css'
 import App from './App'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))

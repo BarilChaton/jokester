@@ -1,4 +1,4 @@
-import { setUser, setLoggedIn, setUserDropDownMenu, setSessionId } from '../../redux/actions'
+import { setUser, setLoggedIn, setUserDropDownMenu, setSessionId, setProfileWindow } from '../../redux/actions'
 import React, { useLayoutEffect, useEffect, useState } from 'react'
 import { client } from '../../client'
 import { userQuery } from '../../utils/data'
@@ -9,7 +9,7 @@ import { TbBackpack, TbSettings } from 'react-icons/tb'
 import { MdOutlinePowerSettingsNew } from 'react-icons/md'
 
 const UserMenu = (props) => {
-  const { darkMode, loggedIn } = props
+  const { darkMode, loggedIn, dispatch } = props
 
   const [ bgColor, setBgColor ] = useState()
   const [ textColor, setTextColor ] = useState()
@@ -57,6 +57,11 @@ const UserMenu = (props) => {
     }
   }, [ darkMode ])
 
+  const openProfile = () => {
+    dispatch(setProfileWindow(true))
+    dispatch(setUserDropDownMenu(false))
+  }
+
   const logout = () => {
     localStorage.clear()
     window.location.reload()
@@ -68,7 +73,7 @@ const UserMenu = (props) => {
         <div className='flex flex-col w-full text-center font-bold text-2xl items-center divide-y'>
           <div className={`flex flex-col-2 relative justify-center items-center w-full py-[19.3px] hover:bg-${hoverColor} duration-150 cursor-pointer`}>
             <img src={imageToLoad} alt="user" className='w-[40px] h-[40px] absolute left-0 mx-5 rounded-full' />
-            <h3>Profile</h3>
+            <h3 className={`w-full hover:bg-${hoverColor} duration-150 cursor-pointer`} onClick={openProfile}>Profile</h3>
           </div>
           <div className={`flex flex-col-2 relative justify-center items-center w-full hover:bg-${hoverColor} duration-150 cursor-pointer`}>
             <FaRegImage className='max-w-[40px] max-h-[40px] absolute left-0 ml-7'/>
@@ -105,4 +110,5 @@ export default connect(state => ({
   loggedIn: state.loggedIn,
   user: state.user,
   userDropDownMenu: state.userDropDownMenu
-}), { setLoggedIn, setUserDropDownMenu, setSessionId, setUser })(UserMenu)
+}), { setLoggedIn, setUserDropDownMenu, setSessionId, setUser,
+  setProfileWindow })(UserMenu)

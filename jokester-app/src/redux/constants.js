@@ -10,10 +10,11 @@ module.exports = {
     userName: 'userName',
     image: 'image'
   },
-  
+
   // Site Settings
   SET_DARK_MODE: 'SET_DARK_MODE',
-  
+
   // Site functionality
   SET_DROP_DOWN_MENU: 'SET_DROP_DOWN_MENU',
+  SET_PROFILE_WINDOW: 'SET_PROFILE_WINDOW',
 }

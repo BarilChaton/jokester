@@ -50,8 +50,9 @@ const FacebookLoginBtn = (props) => {
     client.createIfNotExists(user).then(() => {
       client.fetch(query).then((userData) => {
         const UserData = { ...userData, _id: id }
+        console.log(UserData);
 
-        dispatch(setUser(UserData[0]))
+        dispatch(setUser(UserData))
         dispatch(setSessionId(id))
         dispatch(setLoggedIn(true))
         dispatch(setDarkMode(UserData[0].settings.darkmode))
