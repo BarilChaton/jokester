@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import { useState, useLayoutEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { MdDarkMode, MdOutlineDarkMode } from 'react-icons/md'
+import { client } from '../../client'
 import Logo from './logo'
 import { dmButtonHover } from '../../config/styleConfig'
 import LoginButton from './loginButton'
 
 const TopBar = (props) => {
-  const { darkMode, dispatch } = props
+  const { darkMode, loggedIn, sessionId, dispatch } = props
   const { dm, lm } = dmButtonHover
 
   const [ bgColor, setBgColor ] = useState()
@@ -29,13 +30,43 @@ const TopBar = (props) => {
     }
   }, [darkMode, dm, lm])
 
-  function handleColorModeToggle() {
+  async function handleColorModeToggle() {
     if (darkMode) {
-      dispatch(setDarkMode(false))
+      if (loggedIn) {
+        dispatch(setDarkMode(false))
+        client
+          .patch(sessionId)
+          .set({ "settings": { "darkmode": false } })
+          .commit()
+          .then(updatedDocument => {
+            console.log('User document updated: ', updatedDocument);
+          })
+          .catch(error => {
+            console.error('Error: ', error)
+          })
+      } else {
+        dispatch(setDarkMode(false))
+      }
     } else {
-      dispatch(setDarkMode(true))
+      if (loggedIn) {
+        dispatch(setDarkMode(true))
+        client
+          .patch(sessionId)
+          .set({ "settings": { "darkmode": true } })
+          .commit()
+          .then(updatedDocument => {
+            console.log('User document updated: ', updatedDocument);
+          })
+          .catch(error => {
+            console.error('Error: ', error)
+          })
+      } else {
+        dispatch(setDarkMode(false))
+      }
     }
   }
+
+
 
   return (
     <div className={`flex relative w-full h-full shadow-lg items-center p-2 ${bgColor}`}>
@@ -51,7 +82,7 @@ const TopBar = (props) => {
           {/* login or options dropdown button */}
           <LoginButton {...props}/>
         </div>
-        <div className='justify-center mr-[75px] items-center z-[12]'> 
+        <div className='justify-center mr-[75px] items-center z-[12]'>
           {/* Dark Mode Button Container */}
           <div className={dmToggleStyle}>
             <button onClick={handleColorModeToggle}>
@@ -67,5 +98,6 @@ const TopBar = (props) => {
 export default connect(state => ({
   darkMode: state.darkMode,
   loggedIn: state.loggedIn,
+  sessionId: state.sessionId,
   user: state.user
 }), { setDarkMode })(TopBar)

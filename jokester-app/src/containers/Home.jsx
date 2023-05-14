@@ -1,4 +1,4 @@
-import { setUser, setLoggedIn, setSessionId } from '../redux/actions'
+import { setUser, setLoggedIn, setSessionId, setDarkMode } from '../redux/actions'
 import React, { useState, useLayoutEffect, useEffect } from 'react'
 import reducer from '../redux/reducer'
 import { client } from '../client'
@@ -48,6 +48,7 @@ const Home = (props) => {
         console.log(user);
         dispatch(setUser(user));
         dispatch(setSessionId(user._id));
+        dispatch(setDarkMode(user[0].settings.darkmode))
         dispatch(setLoggedIn(true));
       }).catch((error) => {
         console.log('Error fetching user data from database:', error);
@@ -79,4 +80,4 @@ export default connect(state => ({
   darkMode: state.darkMode,
   loginModalOpen: state.loginModalOpen,
   userDropDownMenu: state.userDropDownMenu
-}), { setUser, setLoggedIn, setSessionId })(Home)
+}), { setUser, setLoggedIn, setSessionId, setDarkMode })(Home)
