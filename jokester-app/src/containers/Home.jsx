@@ -11,17 +11,17 @@ import UserMenu from '../components/UserMenu/userMenu'
 
 const Home = (props) => {
   const { darkMode, loginModalOpen, userDropDownMenu, dispatch } = props
-  
+
   const [ bgColor, setBgColor ] = useState()
   const [ dropMenu, setDropMenu ] = useState()
-  
+
   useLayoutEffect(() => {
     if (darkMode) {
       setBgColor('darkModePrimaryBg')
     } else {
       setBgColor('lightModePrimaryBg')
     }
-    
+
     return () => {
       setBgColor()
     }
@@ -34,7 +34,7 @@ const Home = (props) => {
       setDropMenu('top-[-500px]')
     }
   }, [ userDropDownMenu ])
-  
+
   useEffect(() => {
 
     const userString = localStorage.getItem('user')
@@ -44,7 +44,8 @@ const Home = (props) => {
       const query = userQuery(id)
 
       client.fetch(query).then((userData) => {
-        const user = { ...userData, _id: id, userName: name };
+        const user = { ...userData, _id: id, userName: name }
+        console.log(user);
         dispatch(setUser(user));
         dispatch(setSessionId(user._id));
         dispatch(setLoggedIn(true));
@@ -57,7 +58,7 @@ const Home = (props) => {
       dispatch(setLoggedIn(false));
       dispatch(setSessionId(guestId));
     }
-  
+
   }, [ dispatch ])
 
   return (

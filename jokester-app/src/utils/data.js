@@ -46,12 +46,20 @@ export const categories = [
 export const userQuery = (userId) => {
   const query = `*[_type == 'user' && _id == '${userId}']{
     userName,
+    jokestername,
     image{
       asset->{
         url
       }
     },
-    credentialType
+    email,
+    jokepoints,
+    jokescore,
+    settings{
+      darkmode,
+      showrealname,
+      showemail
+    }
   }`
   return query
 }
