@@ -6,9 +6,11 @@ import { userQuery } from '../../utils/data'
 
 import { FaRegUser } from 'react-icons/fa'
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { GiCrownCoin } from 'react-icons/gi'
 
 const LoginButton = (props) => {
   const { darkMode, loggedIn, user, userDropDownMenu, dispatch } = props
+  const coins = user && user[0].jokepoints
 
   const [ extend, setExtend ] = useState(false)
   const [ buttonText, setButtonText ] = useState()
@@ -127,10 +129,11 @@ const LoginButton = (props) => {
   }
 
   return (
-    <div className={`w-[200px] flex justify-end h-auto my-[2px] px-2 ${textColor} font-bold text-[17px]`}>
-      <button onClick={handleClick} className={`
+    <div className={`w-[300px] flex justify-end h-auto my-[2px] px-2 ${textColor} font-bold text-[17px]`}>
+      <div className={`
         flex
         flex-row
+        w-full
         h-[55px]
         items-center
         justify-end
@@ -138,23 +141,29 @@ const LoginButton = (props) => {
         rounded-full
         sign-up-button
         p-0
-        m-3
+        mx-1
         transition-width
         SignUpEasing
         duration-SignUpTransTime
         ${extend ? "w-SignUpExtend" : "w-SignUpNormal"}
         `}>
-          <div className='flex items-center'>
-            <h3 className={`flex justify-center items-center m-auto transition-opacity duration-200 ${extend ? "opacity-1" : "opacity-0"}`}>
+          <div className='flex w-full items-center'>
+            <div className='flex justify-start w-full left-0 items-center mx-4 text-[28px]'>
+              <GiCrownCoin />
+              <h3 className='text-[18px] text-left mx-2'>{coins}</h3>
+            </div>
+            <button onClick={handleClick} className='flex w-[80%] justify-end items-center'>
+              <h3 className={`flex justify-center items-center m-auto transition-opacity duration-200 ${extend ? "opacity-1" : "opacity-0"}`}>
               {buttonText}
-            </h3>
-            {loggedIn && <div className={`flex justify-center text-2xl items-center transition-opacity duration-200 ${extend ? "opacity-1" : "opacity-0"}`}>
-              <MdKeyboardArrowDown className={`${userDropDownMenu ? "rotate-arrow-up" : "rotate-arrow-down"}`}/>
-            </div>}
+              </h3>
+              {loggedIn && <div className={`flex justify-center text-2xl items-center transition-opacity duration-200 ${extend ? "opacity-1" : "opacity-0"}`}>
+                <MdKeyboardArrowDown className={`${userDropDownMenu ? "rotate-arrow-up" : "rotate-arrow-down"}`}/>
+              </div>}
+            </button>
+            {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> :
+              <img src={imageToLoad} alt="user" className='w-[40px] h-[40px] m-[7px] rounded-full' />}
           </div>
-          {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> :
-          <img src={imageToLoad} alt="user" className='w-[40px] h-[40px] m-[7px] rounded-full' />}
-      </button>
+      </div>
     </div>
   )
 }
@@ -165,5 +174,3 @@ export default connect(state => ({
   user: state.user,
   userDropDownMenu: state.userDropDownMenu
 }), { setLoginModal, setUserDropDownMenu })(LoginButton)
-
-// ${extend ? "opacity-1" : "opacity-0"}

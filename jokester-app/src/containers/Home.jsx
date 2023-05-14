@@ -40,7 +40,6 @@ const Home = (props) => {
     const userString = localStorage.getItem('user')
 
     if (userString && userString !== 'undefined') {
-      console.log(userString);
       const isGoogle = userString.includes('google')
 
       const { name, id, sub } = JSON.parse(userString)
@@ -65,7 +64,7 @@ const Home = (props) => {
 
   return (
     <div className={`w-screen h-screen ${bgColor}`}>
-      <div className={`flex absolute justify-end smooth-transition right-[110px] ${dropMenu} z-9`}>
+      <div className={`flex absolute justify-end overflow-hidden smooth-transition right-[110px] ${dropMenu} z-9`}>
         <UserMenu {...props}/>
       </div>
       <div className='flex w-screen h-[65px] flex-initial z-10'>

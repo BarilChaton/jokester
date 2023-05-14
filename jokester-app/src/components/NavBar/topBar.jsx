@@ -69,20 +69,20 @@ const TopBar = (props) => {
 
 
   return (
-    <div className={`flex relative w-full h-full shadow-lg items-center p-2 ${bgColor}`}>
-      <div className='flex absolute left-0 ml-[75px] items-center'>
+    <div className={`flex relative w-screen h-full shadow-lg items-center p-2 ${bgColor}`}>
+      <div className='flex w-1/2 left-0 ml-[75px] items-center'>
         <NavLink to={'/'}>
           <Logo {...{
             darkMode
           }}/>
         </NavLink>
       </div>
-      <div className='flex absolute right-0 flex-col-2 justify-end items-center z-[11]'>
+      <div className='flex w-1/2 right-0 flex-col-2 justify-end items-center z-[11]'>
         <div className='items-center'>
           {/* login or options dropdown button */}
           <LoginButton {...props}/>
         </div>
-        <div className='justify-center mr-[75px] items-center z-[12]'>
+        <div className='justify-end pr-[75px] items-center z-[12]'>
           {/* Dark Mode Button Container */}
           <div className={dmToggleStyle}>
             <button onClick={handleColorModeToggle}>
