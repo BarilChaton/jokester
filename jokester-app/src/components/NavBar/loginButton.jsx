@@ -2,14 +2,14 @@ import { setLoginModal, setUserDropDownMenu } from '../../redux/actions'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { client } from '../../client'
-import { userQuery } from '../../utils/data' 
+import { userQuery } from '../../utils/data'
 
 import { FaRegUser } from 'react-icons/fa'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 
 const LoginButton = (props) => {
   const { darkMode, loggedIn, user, userDropDownMenu, dispatch } = props
-  
+
   const [ extend, setExtend ] = useState(false)
   const [ buttonText, setButtonText ] = useState()
   const [ color, setColor ] = useState()
@@ -75,6 +75,8 @@ const LoginButton = (props) => {
       signUpButton.addEventListener("mouseleave", handleLeave)
     } else if (!loggedIn) {
       signUpButton.addEventListener("mouseleave", handleLeave)
+    } else if (loggedIn) {
+      handleHover()
     }
 
     return () => {
@@ -124,19 +126,19 @@ const LoginButton = (props) => {
   return (
     <div className={`w-[200px] flex justify-end h-auto my-[2px] px-2 ${textColor} font-bold text-[17px]`}>
       <button onClick={handleClick} className={`
-        flex 
-        flex-row 
-        h-[55px] 
-        items-center 
-        justify-end 
+        flex
+        flex-row
+        h-[55px]
+        items-center
+        justify-end
         ${color}
         rounded-full
         sign-up-button
-        p-0 
+        p-0
         m-3
-        transition-width 
-        SignUpEasing 
-        duration-SignUpTransTime 
+        transition-width
+        SignUpEasing
+        duration-SignUpTransTime
         ${extend ? "w-SignUpExtend" : "w-SignUpNormal"}
         `}>
           <div className='flex items-center'>
@@ -147,9 +149,9 @@ const LoginButton = (props) => {
               <MdKeyboardArrowDown className={`${userDropDownMenu ? "rotate-arrow-up" : "rotate-arrow-down"}`}/>
             </div>}
           </div>
-          {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> : 
+          {!loggedIn ? <FaRegUser className='w-[35px] h-[35px] m-[10px]'/> :
           <img src={imageToLoad} alt="user" className='w-[40px] h-[40px] m-[7px] rounded-full' />}
-      </button>      
+      </button>
     </div>
   )
 }

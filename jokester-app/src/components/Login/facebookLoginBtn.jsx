@@ -22,7 +22,7 @@ const FacebookLoginBtn = (props) => {
     const { id, name, picture, email } = response
 
     const query = userQuery(id)
-    const imageAssetId = uploadImageToDB(picture.data.url)
+    const imageAssetId = await uploadImageToDB(picture.data.url)
 
     const user = {
       _id: id,
