@@ -1,5 +1,5 @@
 import { setLoggedIn, setLoginModal, setUser, setSessionId, setDarkMode } from '../../redux/actions'
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
 import { client } from '../../client'
@@ -9,8 +9,6 @@ import { FaFacebookF } from 'react-icons/fa'
 const FacebookLoginBtn = (props) => {
   const { darkMode, dispatch } = props
   const facebookAppId = process.env.REACT_APP_FACEBOOK_APP_ID
-
-  const [ userExists, setUserExists ] = useState(false)
 
   async function uploadImageToDB(url) {
     const response = await fetch(url)
@@ -24,73 +22,64 @@ const FacebookLoginBtn = (props) => {
     const { id, name, picture, email } = response
 
     const query = userQuery(id)
+    const imageAssetId = uploadImageToDB(picture.data.url)
 
-    client.fetch(query).then((userData) => {
-      setUserExists(true)
-      dispatch(setUser(userData[0]))
-      dispatch(setSessionId(id))
-      dispatch(setLoggedIn(true))
-      dispatch(setDarkMode(userData[0].settings.darkmode))
-      console.warn("User found in database")
-      dispatch(setLoginModal(false))
-    }).then(() => {
-      if (userExists) {
-        console.warn("User was not found in database, creating new user")
-        const imageAssetId = uploadImageToDB(picture.data.url)
-
-        const user = {
-          _id: id,
-          _type: 'user',
-          userName: name,
-          jokestername: "",
-          image: {
-            _type: 'image',
-            asset: {
-              _type: 'reference',
-              _ref: imageAssetId
-            }
-          },
-          imageUrl: picture.data.url,
-          email: email,
-          jokepoints: 0,
-          jokescore: 0,
-          settings: {
-            darkmode: darkMode,
-            showrealname: false,
-            showemail: false
-          }
+    const user = {
+      _id: id,
+      _type: 'user',
+      userName: name,
+      jokestername: "",
+      image: {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: imageAssetId
         }
-
-        // Add a way to await a promise
-        client.createIfNotExists(user)
-          .then(() => {
-            client.fetch(query).then((userData) => {
-            dispatch(setUser(userData[0]))
-            dispatch(setSessionId(id))
-            dispatch(setLoggedIn(true))
-            dispatch(setDarkMode(userData[0].settings.darkmode))
-            console.warn("User created and found in database")
-            dispatch(setLoginModal(false))
-          })
-        })
+      },
+      imageUrl: picture.data.url,
+      email: email,
+      jokepoints: 0,
+      jokescore: 0,
+      settings: {
+        darkmode: darkMode,
+        showrealname: false,
+        showemail: false
       }
+    }
+
+    client.createIfNotExists(user).then(() => {
+      client.fetch(query).then((userData) => {
+        const UserData = { ...userData, _id: id }
+
+        dispatch(setUser(UserData[0]))
+        dispatch(setSessionId(id))
+        dispatch(setLoggedIn(true))
+        dispatch(setDarkMode(UserData[0].settings.darkmode))
+        dispatch(setLoginModal(false))
+      })
     })
   }
 
   return (
-    <FacebookLogin
-      appId={facebookAppId}
-      fields="name,email,picture"
-      callback={handleFacebookResponse}
-      render={renderProps => (
-        <button
-          class='flex flex-col-2 rounded-lg'
-          onClick={renderProps.onClick}>
-          <FaFacebookF />
-          Login with Facebook
-        </button>
-      )}
-    />
+    <div className='w-[310.5px] h-[57px] flex flex-col-2 relative justify-center items-center bg-[#4c69ba] rounded-md overflow-hidden'>
+      <div className='flex w-1/7 items-center ml-3 text-white text-3xl'>
+        <FaFacebookF />
+      </div>
+      <div className='flex w-6/7 items-center'>
+        <FacebookLogin
+          appId={facebookAppId}
+          fields="name,email,picture"
+          callback={handleFacebookResponse}
+          render={renderProps => (
+          <button
+            class='flex flex-col-2 rounded-lg'
+            onClick={renderProps.onClick}>
+            Login with Facebook
+          </button>
+        )}
+      />
+      </div>
+    </div>
   )
 }
 

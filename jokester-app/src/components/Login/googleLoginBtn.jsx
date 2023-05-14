@@ -1,5 +1,5 @@
 import { setLoggedIn, setLoginModal, setUser, setSessionId, setDarkMode } from '../../redux/actions'
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode'
@@ -9,8 +9,6 @@ import { userQuery } from '../../utils/data'
 
 const GoogleLoginBtn = (props) => {
   const { darkMode, dispatch } = props
-
-  const [ userExists, setUserExists ] = useState(false)
 
   async function uploadImageToDB(url) {
     const response = await fetch(url)
@@ -25,63 +23,42 @@ const GoogleLoginBtn = (props) => {
     const { name, picture, sub, email } = decoded
 
     const query = userQuery(sub)
+    const imageAssetId = await uploadImageToDB(picture)
 
-    client.fetch(query).then((userData) => {
-      setUserExists(true)
-      dispatch(setUser(userData[0]))
-      dispatch(setSessionId(sub))
-      dispatch(setLoggedIn(true))
-      dispatch(setDarkMode(userData[0].settings.darkmode))
-      console.warn("User found in database")
-      dispatch(setLoginModal(false))
-    }).then(() => {
-      if (!userExists) {
-        console.warn("User was not found in database, creating new user")
-        const imageAssetId = uploadImageToDB(picture)
-
-        const user = {
-          _id: sub,
-          _type: 'user',
-          userName: name,
-          jokestername: "",
-          image: {
-            _type: 'image',
-            asset: {
-              _type: 'reference',
-              _ref: imageAssetId
-            }
-          },
-          imageUrl: picture,
-          email: email,
-          jokepoints: 0,
-          jokescore: 0,
-          settings: {
-            darkmode: darkMode,
-            showrealname: false,
-            showemail: false
-          }
+    const user = {
+      _id: sub,
+      _type: 'user',
+      userName: name,
+      jokestername: "",
+      image: {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: imageAssetId
         }
-
-        const createdUserPromise = new Promise((resolve) => {
-          client.createIfNotExists(user).then(() => {
-            resolve()
-          })
-        })
-
-        // Add a way to await a promise
-        createdUserPromise.then(() => {
-          client.fetch(query).then((userData) => {
-          dispatch(setUser(userData[0]));
-          dispatch(setSessionId(sub));
-          dispatch(setLoggedIn(true));
-          dispatch(setDarkMode(userData[0].settings.darkmode));
-          console.warn("User created and found in database");
-          dispatch(setLoginModal(false));
-          })
-        })
+      },
+      imageUrl: picture,
+      email: email,
+      jokepoints: 0,
+      jokescore: 0,
+      settings: {
+        darkmode: darkMode,
+        showrealname: false,
+        showemail: false
       }
-    })
+    }
 
+    client.createIfNotExists(user).then(() => {
+      client.fetch(query).then((userData) => {
+        const UserData = { ...userData, _id: sub }
+
+        dispatch(setUser(UserData[0]))
+        dispatch(setSessionId(UserData._id))
+        dispatch(setLoggedIn(true))
+        dispatch(setDarkMode(UserData[0].settings.darkmode))
+        dispatch(setLoginModal(false))
+      })
+    })
   }
 
   return (
