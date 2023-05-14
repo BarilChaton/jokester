@@ -40,18 +40,19 @@ const Home = (props) => {
     const userString = localStorage.getItem('user')
 
     if (userString && userString !== 'undefined') {
-      const { name, id } = JSON.parse(userString)
-      const query = userQuery(id)
+      console.log(userString);
+      const isGoogle = userString.includes('google')
+
+      const { name, id, sub } = JSON.parse(userString)
+      const idCheck = isGoogle ? sub : id
+      const query = userQuery(idCheck)
 
       client.fetch(query).then((userData) => {
-        const user = { ...userData, _id: id, userName: name }
-        console.log(user);
-        dispatch(setUser(user));
-        dispatch(setSessionId(user._id));
-        dispatch(setDarkMode(user[0].settings.darkmode))
+        const fetchedUser = { ...userData, _id: idCheck, userName: name }
+        dispatch(setUser(fetchedUser));
+        dispatch(setSessionId(fetchedUser._id));
+        dispatch(setDarkMode(fetchedUser[0].settings.darkmode))
         dispatch(setLoggedIn(true));
-      }).catch((error) => {
-        console.log('Error fetching user data from database:', error);
       })
 
     } else {
@@ -78,6 +79,7 @@ const Home = (props) => {
 export const Reducer = reducer
 export default connect(state => ({
   darkMode: state.darkMode,
+  loggedIn: state.loggedIn,
   loginModalOpen: state.loginModalOpen,
   userDropDownMenu: state.userDropDownMenu
 }), { setUser, setLoggedIn, setSessionId, setDarkMode })(Home)

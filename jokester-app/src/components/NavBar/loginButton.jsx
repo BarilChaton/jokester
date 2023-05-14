@@ -25,8 +25,11 @@ const LoginButton = (props) => {
 
         const query = userQuery(sub)
         client.fetch(query).then((userData) => {
-          const user = { ...userData, _id: sub, imageUrl: picture }
-          setImageToLoad(user.imageUrl)
+          const fetchedUser = { ...userData, _id: sub, imageUrl: picture }
+          setImageToLoad(fetchedUser.imageUrl)
+          const userName = fetchedUser[0].userName.split(" ")
+          setButtonText(userName[0])
+          extendButton()
         })
       } else {
         const { id } = JSON.parse(userString)
@@ -39,7 +42,18 @@ const LoginButton = (props) => {
         })
       }
     }
-  }, [ loggedIn ])
+
+    if (loggedIn) {
+      setTimeout(() => {
+        const { userName } = user
+        const newUserName = userName.split(" ")
+
+        setButtonText(newUserName[0])
+        extendButton()
+      }, 0)
+    }
+
+  }, [loggedIn, user])
 
   useLayoutEffect(() => {
 
@@ -48,20 +62,11 @@ const LoginButton = (props) => {
         extendButton().then(() => {
           setButtonText('Sign In')
         })
-      } else {
-        extendButton().then(() => {
-          const newUserName = user.userName.split(' ')
-          setButtonText(newUserName[0])
-        })
       }
     }
 
     const handleLeave = () => {
       if(!loggedIn) {
-        returnButton().then(() => {
-          setButtonText('')
-        })
-      } else {
         returnButton().then(() => {
           setButtonText('')
         })
@@ -104,12 +109,12 @@ const LoginButton = (props) => {
 
   const returnButton = () => {
     return new Promise((resolve) => {
-        setTimeout(() => {
-          setExtend(false)
-          resolve()
-        }, 300)
-      })
-    }
+      setTimeout(() => {
+        setExtend(false)
+        resolve()
+      }, 300)
+    })
+  }
 
   function handleClick() {
     if (!loggedIn) {
