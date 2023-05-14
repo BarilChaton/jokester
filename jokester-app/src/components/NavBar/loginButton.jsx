@@ -75,8 +75,6 @@ const LoginButton = (props) => {
       signUpButton.addEventListener("mouseleave", handleLeave)
     } else if (!loggedIn) {
       signUpButton.addEventListener("mouseleave", handleLeave)
-    } else if (loggedIn) {
-      handleHover()
     }
 
     return () => {
