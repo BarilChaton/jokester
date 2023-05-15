@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import TopBar from '../components/NavBar/topBar'
 import Login from '../components/Login/Login'
-import UserMenu from '../components/UserMenu/userMenu'
+import UserMenu from '../components/UserMenu/UserMenu'
 import Profile from '../components/Profile/profile'
 
 const Home = (props) => {
@@ -64,7 +64,7 @@ const Home = (props) => {
   }, [ dispatch ])
 
   return (
-    <div className={`w-screen h-screen ${bgColor}`}>
+    <div className={`w-screen h-screen overflow-hidden ${bgColor}`}>
       <div className={`flex absolute justify-end overflow-hidden smooth-transition right-[110px] ${dropMenu} z-9`}>
         <UserMenu {...props}/>
       </div>
